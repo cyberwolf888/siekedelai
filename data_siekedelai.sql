@@ -1,13 +1,15 @@
 -- phpMyAdmin SQL Dump
--- version 4.5.1
--- http://www.phpmyadmin.net
+-- version 4.7.4
+-- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: 28 Nov 2017 pada 05.55
--- Versi Server: 10.1.13-MariaDB
--- PHP Version: 7.0.5
+-- Generation Time: Nov 28, 2017 at 05:41 PM
+-- Server version: 10.1.26-MariaDB
+-- PHP Version: 7.1.9
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
+SET AUTOCOMMIT = 0;
+START TRANSACTION;
 SET time_zone = "+00:00";
 
 
@@ -23,7 +25,7 @@ SET time_zone = "+00:00";
 -- --------------------------------------------------------
 
 --
--- Struktur dari tabel `detail_transaction`
+-- Table structure for table `detail_transaction`
 --
 
 CREATE TABLE `detail_transaction` (
@@ -40,7 +42,7 @@ CREATE TABLE `detail_transaction` (
 -- --------------------------------------------------------
 
 --
--- Struktur dari tabel `payment`
+-- Table structure for table `payment`
 --
 
 CREATE TABLE `payment` (
@@ -55,7 +57,7 @@ CREATE TABLE `payment` (
 -- --------------------------------------------------------
 
 --
--- Struktur dari tabel `product`
+-- Table structure for table `product`
 --
 
 CREATE TABLE `product` (
@@ -65,17 +67,24 @@ CREATE TABLE `product` (
   `description` text NOT NULL,
   `price` float NOT NULL,
   `stock` int(11) NOT NULL,
+  `berat` int(11) NOT NULL DEFAULT '0',
   `discount` float NOT NULL,
-  `isSale` enum('1','0') NOT NULL,
   `available` enum('1','0') NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
+--
+-- Dumping data for table `product`
+--
+
+INSERT INTO `product` (`id`, `type`, `name`, `description`, `price`, `stock`, `berat`, `discount`, `available`, `created_at`, `updated_at`) VALUES
+(1, 1, 'Kedelai ABC', 'Kedelai paling enak yang pernah ada', 8000, 12, 1, 0, '1', '2017-11-28 09:55:40', '2017-11-28 09:55:40');
+
 -- --------------------------------------------------------
 
 --
--- Struktur dari tabel `product_images`
+-- Table structure for table `product_images`
 --
 
 CREATE TABLE `product_images` (
@@ -86,10 +95,17 @@ CREATE TABLE `product_images` (
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
+--
+-- Dumping data for table `product_images`
+--
+
+INSERT INTO `product_images` (`id`, `product_id`, `image`, `created_at`, `updated_at`) VALUES
+(2, 1, '4fb66abd3021027b2a88da59bc1000dd.jpg', '2017-11-28 09:58:37', '2017-11-28 09:58:37');
+
 -- --------------------------------------------------------
 
 --
--- Struktur dari tabel `setting`
+-- Table structure for table `setting`
 --
 
 CREATE TABLE `setting` (
@@ -101,20 +117,18 @@ CREATE TABLE `setting` (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
--- Dumping data untuk tabel `setting`
+-- Dumping data for table `setting`
 --
 
 INSERT INTO `setting` (`id`, `type`, `value`, `created_at`, `updated_at`) VALUES
-(2, 'product_detail', 'Material', '2017-06-02 18:19:13', '2017-06-02 18:23:42'),
-(3, 'product_detail', 'Warna', '2017-06-02 18:19:27', '2017-06-05 19:46:56'),
-(4, 'product_detail', 'Panjang', '2017-06-02 18:20:11', '2017-06-05 19:47:05'),
-(5, 'product_detail', 'Lebar', '2017-06-05 19:47:20', '2017-06-05 19:47:20'),
-(6, 'product_detail', 'Tinggi', '2017-06-05 19:47:29', '2017-06-05 19:47:29');
+(7, 'JNE', '20000', '2017-11-28 10:04:55', '2017-11-28 10:04:55'),
+(8, 'TIKI', '15000', '2017-11-28 10:05:05', '2017-11-28 10:05:05'),
+(9, 'Wahana', '10000', '2017-11-28 10:05:19', '2017-11-28 10:05:19');
 
 -- --------------------------------------------------------
 
 --
--- Struktur dari tabel `subscribe`
+-- Table structure for table `subscribe`
 --
 
 CREATE TABLE `subscribe` (
@@ -127,7 +141,7 @@ CREATE TABLE `subscribe` (
 -- --------------------------------------------------------
 
 --
--- Struktur dari tabel `transaction`
+-- Table structure for table `transaction`
 --
 
 CREATE TABLE `transaction` (
@@ -147,7 +161,7 @@ CREATE TABLE `transaction` (
 -- --------------------------------------------------------
 
 --
--- Struktur dari tabel `users`
+-- Table structure for table `users`
 --
 
 CREATE TABLE `users` (
@@ -165,7 +179,7 @@ CREATE TABLE `users` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
--- Dumping data untuk tabel `users`
+-- Dumping data for table `users`
 --
 
 INSERT INTO `users` (`id`, `name`, `email`, `password`, `phone`, `address`, `isActive`, `type`, `remember_token`, `created_at`, `updated_at`) VALUES
@@ -237,36 +251,44 @@ ALTER TABLE `users`
 --
 ALTER TABLE `detail_transaction`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+
 --
 -- AUTO_INCREMENT for table `payment`
 --
 ALTER TABLE `payment`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+
 --
 -- AUTO_INCREMENT for table `product`
 --
 ALTER TABLE `product`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+
 --
 -- AUTO_INCREMENT for table `product_images`
 --
 ALTER TABLE `product_images`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+
 --
 -- AUTO_INCREMENT for table `setting`
 --
 ALTER TABLE `setting`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
+
 --
 -- AUTO_INCREMENT for table `subscribe`
 --
 ALTER TABLE `subscribe`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+
 --
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
   MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+COMMIT;
+
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;

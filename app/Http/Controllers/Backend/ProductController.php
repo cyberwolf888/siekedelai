@@ -34,33 +34,26 @@ class ProductController extends Controller
     public function store(Request $request)
     {
         $this->validate($request, [
-            'name' => 'required|unique:category|max:255',
+            'name' => 'required|unique:product|max:255',
             'description' => 'required',
             'price' => 'required|numeric',
             'stock' => 'required|numeric',
+            'berat' => 'required|numeric',
             'discount' => 'required|numeric',
             'available' => 'required',
         ]);
 
         $model = new Product();
-        $model->category_id = $request->category_id;
+        $model->type = $request->type;
         $model->name = $request->name;
         $model->price = $request->price;
         $model->stock = $request->stock;
+        $model->berat = $request->berat;
         $model->description = $request->description;
         $model->discount = $request->discount;
-        $model->isSale = $request->isSale;
         $model->available = $request->available;
         $model->save();
 
-        $count = count($request->label);
-        for ($i=0; $i<$count; $i++){
-            $detail = new ProductDetail();
-            $detail->product_id = $model->id;
-            $detail->label = $request->label[$i];
-            $detail->value = $request->value[$i];
-            $detail->save();
-        }
         return redirect()->route('backend.product.gallery.manage',$model->id)->with('success', 'Add new product!');
     }
 
@@ -141,7 +134,7 @@ class ProductController extends Controller
             'image' => 'required|image'
         ]);
         $model = new ProductImages();
-        $path = base_path('../assets/img/product/'.$id.'/');
+        $path = base_path('assets/img/product/'.$id.'/');
         if(!File::exists($path)) {
             File::makeDirectory($path, $mode = 0777, true, true);
         }

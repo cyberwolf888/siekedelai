@@ -20,8 +20,8 @@
                                     <b>{{ $model->name }}</b>
                                 </li>
                                 <li class="collection-item">
-                                    <span class="grey-text text-lighten-1">Category</span><br>
-                                    <b>{{ $model->category->name }}</b>
+                                    <span class="grey-text text-lighten-1">Type</span><br>
+                                    <b>{{ $model->type }}</b>
                                 </li>
                                 <li class="collection-item">
                                     <span class="grey-text text-lighten-1">Price</span><br>
@@ -32,8 +32,12 @@
                                     <b>{{ $model->discount }} %</b>
                                 </li>
                                 <li class="collection-item">
-                                    <span class="grey-text text-lighten-1">Sale</span><br>
-                                    <b>{{ $model->isSale == 1 ? 'Yes' : 'No' }}</b>
+                                    <span class="grey-text text-lighten-1">Stock</span><br>
+                                    <b>{{ $model->stock }}</b>
+                                </li>
+                                <li class="collection-item">
+                                    <span class="grey-text text-lighten-1">Berat</span><br>
+                                    <b>{{ $model->berat }} kg</b>
                                 </li>
                                 <li class="collection-item">
                                     <span class="grey-text text-lighten-1">Available</span><br>
@@ -43,22 +47,6 @@
                                     <span class="grey-text text-lighten-1">Description</span><br>
                                     <b>{{ $model->description }}</b>
                                 </li>
-                            </ul>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="col s12 m12 l6">
-                <div class="card">
-                    <div class="card-content">
-                        <div class="row">
-                            <ul class="collection">
-                                @foreach($model->product_detail as $detail)
-                                <li class="collection-item">
-                                    <span class="grey-text text-lighten-1">{{ $detail->label }}</span><br>
-                                    <b>{{ $detail->value }}</b>
-                                </li>
-                                @endforeach
                             </ul>
                         </div>
                     </div>
