@@ -11,6 +11,7 @@
     <!-- Mobile Specific Metas
     ================================================== -->
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <meta name="csrf-token" content="{{ csrf_token() }}" />
 
     <!-- CSS
     ================================================== -->
@@ -74,7 +75,7 @@
         <div class="twelve columns">
             <div id="additional-menu">
                 <ul>
-                    <li><a href="shopping-cart.html">Shopping Cart</a></li>
+                    <li><a href="{{ route('frontend.cart.manage') }}">Shopping Cart</a></li>
                     <li><a href="checkout-billing-details.html">Checkout</a></li>
                     @if(Auth::check())
                     <li>
@@ -100,7 +101,7 @@
 
                 <!-- Button -->
                 <div class="cart-btn">
-                    <a href="#" class="button adc">$178.00</a>
+                    <a href="#" class="button adc">{{ \Cart::instance('cart')->count() }}</a>
                 </div>
 
                 <div class="cart-list">
@@ -108,29 +109,26 @@
                     <div class="arrow"></div>
 
                     <div class="cart-amount">
-                        <span>2 items in the shopping cart</span>
+                        <span>{{ \Cart::instance('cart')->count() }} items in the shopping cart</span>
                     </div>
-
+                    @if(\Cart::instance('cart')->count()>0)
                     <ul>
+                         @foreach(Cart::instance('cart')->content() as $row)
                         <li>
-                            <a href="#"><img src="{{ url('assets/frontend') }}/images/small_product_list_08.jpg" alt="" /></a>
-                            <a href="#">Converse All Star Trainers</a>
-                            <span>1 x $79.00</span>
+                            <a href="#"><img src="{{ $row->model->getImageThumb() }}" alt="" /></a>
+                            <a href="#">{{ $row->model->name }}</a>
+                            <span>{{ $row->qty }} x {{ number_format($row->price,0,',','.') }}</span>
                             <div class="clearfix"></div>
                         </li>
-
-                        <li>
-                            <a href="#"><img src="{{ url('assets/frontend') }}/images/small_product_list_09.jpg" alt="" /></a>
-                            <a href="#">Tommy Hilfiger <br /> Shirt Beat</a>
-                            <span>1 x $99.00</span>
-                            <div class="clearfix"></div>
-                        </li>
+                        @endforeach
                     </ul>
-
                     <div class="cart-buttons button">
-                        <a href="shopping-cart.html" class="view-cart" ><span data-hover="View Cart"><span>View Cart</span></span></a>
+                        <a href="{{ route('frontend.cart.manage') }}" class="view-cart" ><span data-hover="View Cart"><span>View Cart</span></span></a>
                         <a href="checkout-billing-details.html" class="checkout"><span data-hover="Checkout">Checkout</span></a>
                     </div>
+                    @else
+                    <h3>Cart is empty</h3>
+                    @endif
                     <div class="clearfix">
 
                     </div>

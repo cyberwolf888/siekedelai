@@ -18,14 +18,42 @@ class Product extends Model
         return $this->hasMany('App\Models\ProductImages', 'product_id');
     }
 
-    public function getImage()
+    public function getImageThumb()
     {
         $image = ProductImages::where('product_id',$this->id)->first();
         if($image->count()>0){
-            return url('assets/img/product/'.$this->id.'/thumb_'.$image->image);
+            return url('assets/img/product/'.$this->id.'/'.$image->image);
         }else{
             return '';
         }
 
+    }
+
+    public function getImageCover()
+    {
+        $image = ProductImages::where('product_id',$this->id)->orderBy('id','rand')->first();
+        if($image->count()>0){
+            return url('assets/img/product/'.$this->id.'/'.$image->image);
+        }else{
+            return '';
+        }
+    }
+
+    public function getDetailLink()
+    {
+        return route('frontend.detail_product',$this->id);
+    }
+
+    public function getType()
+    {
+        $type = ['1'=>'Local','2'=>'Impor'];
+
+        return $type[$this->type];
+    }
+
+    public function getDiscountPrice()
+    {
+        $discount = ($this->discount * $this->price)/100;
+        return $this->price-$discount;
     }
 }

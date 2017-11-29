@@ -138,8 +138,7 @@ class ProductController extends Controller
         if(!File::exists($path)) {
             File::makeDirectory($path, $mode = 0777, true, true);
         }
-        $file = Image::make($request->file('image'))->resize(800, 600)->encode('jpg', 80)->save($path.md5(str_random(12)).'.jpg');
-        Image::make($request->file('image'))->resize(270, 311)->encode('jpg', 80)->save($path.'thumb_'.$file->basename);
+        $file = Image::make($request->file('image'))->resize(360, 459)->encode('jpg', 80)->save($path.md5(str_random(12)).'.jpg');
         $model->product_id = $id;
         $model->image = $file->basename;
         $model->save();

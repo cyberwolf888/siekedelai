@@ -11,11 +11,17 @@
 |
 */
 
+
+
+Auth::routes();
+
 Route::get('/', function () {
     return view('frontend.home');
 })->name('home');
 
-Auth::routes();
+Route::get('/product-detail/{id}', 'HomeController@detail_product')->name('frontend.detail_product');
+Route::post('/cart/insert', 'HomeController@cart_insert')->name('frontend.cart.insert');
+Route::get('/cart', 'HomeController@cart_manage')->name('frontend.cart.manage');
 
 //Backend
 Route::group(['prefix' => 'backend', 'middleware' => ['auth','role:admin-access|owner-access'], 'as'=>'backend'], function() {

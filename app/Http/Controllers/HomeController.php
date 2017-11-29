@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\Product;
 
 class HomeController extends Controller
 {
@@ -24,5 +25,41 @@ class HomeController extends Controller
     public function index()
     {
         return view('home');
+    }
+
+    public function detail_product($id)
+    {
+        $model = Product::find($id);
+        return view('frontend.detail_product',['model'=>$model]);
+    }
+
+    //Cart
+    public function cart_manage()
+    {
+        return view('frontend.cart');
+    }
+    public function cart_insert(Request $request)
+    {
+        $product = Product::findOrFail($request->product_id);
+        $price = $product->price;
+        if($product->discount>0){
+            $price = $product->price-($product->price*$product->discount/100);
+        }
+        \Cart::instance('cart')->add($product->id, $product->name, $request->qty, $price)->associate('App\Models\Product');
+        return response()->json([
+            'status' => '1'
+        ]);
+    }
+
+    public function cart_update(Request $request)
+    {
+        Cart::instance('cart')->update($request->rowId, $request->qty);
+    }
+
+    public function cart_delete(Request $request)
+    {
+        $rowId = $request->rowId;
+        Cart::instance('cart')->remove($rowId);
+        return redirect()->back();
     }
 }
