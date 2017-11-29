@@ -12,12 +12,10 @@
 */
 
 Route::get('/', function () {
-    return view('welcome');
-});
+    return view('frontend.home');
+})->name('home');
 
 Auth::routes();
-
-Route::get('/home', 'HomeController@index')->name('home');
 
 //Backend
 Route::group(['prefix' => 'backend', 'middleware' => ['auth','role:admin-access|owner-access'], 'as'=>'backend'], function() {
