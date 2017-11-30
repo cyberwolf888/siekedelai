@@ -133,7 +133,7 @@ class HomeController extends Controller
         }
         $cart->destroy();
         //return redirect()->route('frontend.invoice',base64_encode($model->id));
-        return redirect()->route('home');
+        return redirect()->route('member.invoice',$model->id);
 
     }
 
@@ -160,5 +160,54 @@ class HomeController extends Controller
         $model->phone = $request->phone;
         $model->save();
         return '1';
+    }
+
+    public function order_history()
+    {
+        $model = Transaction::where('member_id',\Auth::user()->id)->get();
+
+        return view('member.order_history', ['model'=>$model]);
+    }
+
+    public function profile()
+    {
+        $model = \Auth::user();
+        return view('member.profile',['model'=>$model]);
+    }
+
+    public function save_profile(Request $request)
+    {
+        $user = \Auth::user();
+        $filter = [
+            'name' => 'required|max:255',
+            'phone' => 'required',
+            'address' => 'required'
+        ];
+
+        if($request->email === $user->email){
+            $filter['email'] = 'required|string|email|max:255';
+        }else{
+            $filter['email'] = 'required|string|email|max:255|unique:users';
+        }
+
+        if($request->password != null){
+            $filter['password'] = 'required|string|min:6|confirmed';
+            $user->password = bcrypt($request->password);
+        }
+
+        $validator = \Validator::make($request->all(),$filter);
+
+        if ($validator->fails()) {
+            return redirect()
+                ->route('member.profile')
+                ->withErrors($validator)
+                ->withInput();
+        }
+        $user->name = $request->name;
+        $user->phone = $request->phone;
+        $user->address = $request->address;
+        $user->save();
+
+        return redirect()->route('member.profile')->with('success', 'Update member!');
     }
 }

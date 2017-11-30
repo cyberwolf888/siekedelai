@@ -76,8 +76,10 @@
             <div id="additional-menu">
                 <ul>
                     <li><a href="{{ route('frontend.cart.manage') }}">Shopping Cart</a></li>
-                    <li><a href="checkout-billing-details.html">Checkout</a></li>
+                    <li><a href="{{ route('frontend.checkout.billing') }}">Checkout</a></li>
                     @if(Auth::check())
+                    <li><a href="{{ route('member.order_history') }}">Order History</a></li>
+                    <li><a href="{{ route('member.profile') }}">Profile</a></li>
                     <li>
                         <a href="#" onclick="event.preventDefault();
                                                      document.getElementById('logout-form').submit();">Logout</a>

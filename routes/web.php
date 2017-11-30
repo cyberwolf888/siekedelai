@@ -32,8 +32,17 @@ Route::group(['prefix' => 'checkout', 'middleware' => ['auth','role:member-acces
     Route::get('/order-review', 'HomeController@order_review')->name('.order_review');
     Route::post('/order-review', 'HomeController@order_proses')->name('.order_proses');
 });
-Route::get('/invoice/{id}', 'HomeController@invoice')->name('frontend.invoice');
-Route::get('/payment/{id}', 'HomeController@payment')->name('frontend.payment');
+
+
+Route::group(['prefix' => 'member', 'middleware' => ['auth','role:member-access'], 'as'=>'member'], function() {
+    Route::get('/payment/{id}', 'HomeController@payment')->name('.payment');
+    Route::get('/invoice/{id}', 'HomeController@invoice')->name('.invoice');
+    Route::get('/order-history', 'HomeController@order_history')->name('.order_history');
+    Route::get('/profile', 'HomeController@profile')->name('.profile');
+    Route::post('/profile', 'HomeController@save_profile')->name('.save_profile');
+});
+
+
 
 //Backend
 Route::group(['prefix' => 'backend', 'middleware' => ['auth','role:admin-access|owner-access'], 'as'=>'backend'], function() {
@@ -139,16 +148,3 @@ Route::group(['prefix' => 'backend', 'middleware' => ['auth','role:admin-access|
 
 });
 
-//Member
-Route::group(['prefix' => 'member', 'middleware' => ['auth','role:member-access'], 'as'=>'member'], function() {
-
-    Route::group(['prefix' => 'transaksi', 'as'=>'.transaction'], function() {
-        Route::get('/', 'Member\TransaksiController@index')->name('.manage');
-        Route::get('/detail/{id}', 'Member\TransaksiController@show')->name('.show');
-    });
-
-    Route::group(['prefix' => 'profile', 'as'=>'.profile'], function() {
-        Route::get('/', 'Member\ProfileController@index')->name('.index');
-        Route::post('/', 'Member\ProfileController@update')->name('.update');
-    });
-});
