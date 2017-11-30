@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Nov 29, 2017 at 05:44 PM
+-- Generation Time: Nov 30, 2017 at 12:02 PM
 -- Server version: 10.1.26-MariaDB
 -- PHP Version: 7.1.9
 
@@ -38,6 +38,14 @@ CREATE TABLE `detail_transaction` (
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `detail_transaction`
+--
+
+INSERT INTO `detail_transaction` (`id`, `transaction_id`, `product_id`, `qty`, `price`, `total`, `created_at`, `updated_at`) VALUES
+(1, 'TR17110001', 4, 20, 8500, 170000, '2017-11-30 10:24:39', '2017-11-30 10:24:39'),
+(2, 'TR17110001', 3, 10, 20000, 200000, '2017-11-30 10:24:39', '2017-11-30 10:24:39');
 
 -- --------------------------------------------------------
 
@@ -81,8 +89,8 @@ CREATE TABLE `product` (
 INSERT INTO `product` (`id`, `type`, `name`, `description`, `price`, `stock`, `berat`, `discount`, `available`, `created_at`, `updated_at`) VALUES
 (1, 1, 'Kedelai ABC', 'Kedelai lokal terbaik yang pernah ada', 18000, 56, 1, 0, '1', '2017-11-29 14:28:42', '2017-11-29 14:28:42'),
 (2, 2, 'Kedelai Jhon', 'Kedelai impor yang enak dan keren', 25000, 40, 1, 10, '1', '2017-11-29 14:29:42', '2017-11-29 14:29:42'),
-(3, 2, 'Awesome Kedelai', 'Kedelai paling mantap', 20000, 34, 1, 0, '1', '2017-11-29 14:30:35', '2017-11-29 14:30:35'),
-(4, 2, 'Kacang kedelai Sintanila', 'kedelai impor paling laris', 10000, 45, 1, 15, '1', '2017-11-29 14:32:42', '2017-11-29 14:32:42');
+(3, 2, 'Awesome Kedelai', 'Kedelai paling mantap', 20000, 24, 1, 0, '1', '2017-11-29 14:30:35', '2017-11-30 10:24:39'),
+(4, 2, 'Kacang kedelai Sintanila', 'kedelai impor paling laris', 10000, 25, 1, 15, '1', '2017-11-29 14:32:42', '2017-11-30 10:24:39');
 
 -- --------------------------------------------------------
 
@@ -143,7 +151,7 @@ INSERT INTO `setting` (`id`, `type`, `value`, `created_at`, `updated_at`) VALUES
 
 CREATE TABLE `subscribe` (
   `id` int(11) NOT NULL,
-  `phone` varchar(255) NOT NULL,
+  `email` varchar(255) NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
@@ -160,13 +168,22 @@ CREATE TABLE `transaction` (
   `fullname` varchar(255) NOT NULL,
   `phone` varchar(12) NOT NULL,
   `address` varchar(255) NOT NULL,
-  `durasi` int(11) NOT NULL,
+  `sub_total` float NOT NULL,
+  `shipping` float NOT NULL,
   `total` float NOT NULL,
-  `denda` float NOT NULL,
   `status` int(1) NOT NULL,
+  `resi` varchar(100) DEFAULT NULL,
+  `shipping_type` varchar(100) NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `transaction`
+--
+
+INSERT INTO `transaction` (`id`, `member_id`, `fullname`, `phone`, `address`, `sub_total`, `shipping`, `total`, `status`, `resi`, `shipping_type`, `created_at`, `updated_at`) VALUES
+('TR17110001', 4, 'Member Bedebah', '086734747', 'Jalan Wisnu Marga Belayu No 19', 370000, 300000, 670000, 1, NULL, 'Wahana', '2017-11-30 10:24:39', '2017-11-30 10:24:39');
 
 -- --------------------------------------------------------
 
@@ -261,7 +278,7 @@ ALTER TABLE `users`
 -- AUTO_INCREMENT for table `detail_transaction`
 --
 ALTER TABLE `detail_transaction`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT for table `payment`

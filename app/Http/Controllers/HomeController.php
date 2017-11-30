@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Transaction;
+use App\Models\TransactionDetail;
 use Illuminate\Http\Request;
 use App\Models\Product;
 
@@ -89,5 +91,74 @@ class HomeController extends Controller
     public function order_review()
     {
          return view('frontend.order_review');   
+    }
+
+    public function order_proses(Request $request)
+    {
+        $billing = session('billing');
+        $shipping = session('shipping');
+
+        $model = new Transaction();
+        $cart = \Cart::instance('cart');
+
+        $model->id = $model->createId();
+        $model->member_id = \Auth::user()->id;
+        $model->fullname = $billing['name'];
+        $model->phone = $billing['phone'];
+        $model->address = $billing['address'];
+        $model->sub_total = $cart->total(0,'','');
+        $berat = 0;
+        foreach ($cart->content() as $row)
+        {
+            $berat+=($row->model->berat*$row->qty);
+        }
+        $model->shipping = $berat*$shipping['value'];
+        $model->total = $model->shipping+$model->sub_total;
+        $model->status = Transaction::NEW_ORDER;
+        $model->shipping_type = $shipping['type'];
+        $model->save();
+        foreach ($cart->content() as $row)
+        {
+            $detail = new TransactionDetail();
+            $detail->transaction_id = $model->id;
+            $detail->product_id = $row->id;
+            $detail->qty = $row->qty;
+            $detail->price = $row->price;
+            $detail->total = $row->qty*$row->price;
+            $detail->save();
+
+            $product = Product::find($row->id);
+            $product->stock = $product->stock - $row->qty;
+            $product->save();
+        }
+        $cart->destroy();
+        //return redirect()->route('frontend.invoice',base64_encode($model->id));
+        return redirect()->route('home');
+
+    }
+
+    public function invoice($id)
+    {
+        $transaction = Transaction::find($id);
+        return view('frontend.invoice',['transaction'=>$transaction]);
+    }
+
+    public function payment($id)
+    {
+
+    }
+
+    public function subscribe(Request $request)
+    {
+        $validator = \Validator::make($request->all(), [
+            'phone' => 'required|max:12|unique:subscribe'
+        ]);
+        if ($validator->fails()) {
+            return '0';
+        }
+        $model = new Subscribe();
+        $model->phone = $request->phone;
+        $model->save();
+        return '1';
     }
 }

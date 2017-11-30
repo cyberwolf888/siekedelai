@@ -30,7 +30,10 @@ Route::group(['prefix' => 'checkout', 'middleware' => ['auth','role:member-acces
     Route::get('/shipping', 'HomeController@shipping')->name('.shipping');
     Route::post('/shipping', 'HomeController@shipping_proses')->name('.shipping_proses');
     Route::get('/order-review', 'HomeController@order_review')->name('.order_review');
+    Route::post('/order-review', 'HomeController@order_proses')->name('.order_proses');
 });
+Route::get('/invoice/{id}', 'HomeController@invoice')->name('frontend.invoice');
+Route::get('/payment/{id}', 'HomeController@payment')->name('frontend.payment');
 
 //Backend
 Route::group(['prefix' => 'backend', 'middleware' => ['auth','role:admin-access|owner-access'], 'as'=>'backend'], function() {

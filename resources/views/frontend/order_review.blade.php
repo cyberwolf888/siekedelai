@@ -71,52 +71,18 @@
 			<div class="checkout-summary">
 				<div class="eight columns alpha omega">
 					<ul class="address-review summary">
-						<li><strong>Credit Card</strong></li>
-						<li>
-							<ul class="payment-icons checkout">
-								<li><img src="images/visa.png" alt="" /></li>
-								<li><img src="images/mastercard.png" alt="" /></li>
-								<li><img src="images/skrill.png" alt="" /></li>
-								<li><img src="images/moneybookers.png" alt="" /></li>
-								<li><img src="images/paypal.png" alt="" /></li>
-							</ul>
-							<div class="clearfix"></div>
-						</li>
+						<li><strong>Transfer Bank</strong></li>
 						<li class="credit-card-fields">
-							<span><label>Credit Card Number:</label><input type="text" value="" /></span>
-
-							<span><label>Month:</label>
-							<select>
-								<option value="">01</option>
-								<option value="">02</option>
-								<option value="">03</option>
-								<option value="">04</option>
-								<option value="">05</option>
-								<option value="">06</option>
-								<option value="">07</option>
-								<option value="">08</option>
-								<option value="">09</option>
-								<option value="">10</option>
-								<option value="">11</option>
-								<option value="">12</option>
-							</select></span>
-							
-							<span><label>Year:</label>
-							<select>
-								<option value="">2014</option>
-								<option value="">2015</option>
-								<option value="">2016</option>
-								<option value="">2017</option>
-								<option value="">2018</option>
-							</select></span>
+							Silakan lakukan transfer bank ke salah satu rekening berikut
 							<div class="clearfix"></div>
 						</li>
 					</ul>
 				</div>
 			</div>
-	
-			<a href="#" class="continue button color">Place Order</a>
-
+		<form action="{{ route('frontend.checkout.order_proses') }}" method="post">
+			{{ csrf_field() }}
+			<input type="submit" class="continue button color" name="continue" value="Place Order" />
+		</form>
 		</div>
 		<!-- Checkout Content / End -->
 
@@ -134,8 +100,9 @@
 				<th>Qty</th>
 				<th>Total</th>
 			</tr>
-					
+            <?php $berat = 0; ?>
 			@foreach(Cart::instance('cart')->content() as $cart)
+			<?php $berat+=($cart->model->berat*$cart->qty); ?>
 			<tr>
 				<td class="hide-on-mobile"><img src="{{ $cart->model->getImageThumb() }}" style="width: 65px; height: 70px;" alt=""/></td>
 				<td class="cart-title"><a href="#">{{ $cart->name }}</a></td>
@@ -153,9 +120,9 @@
 
 				<tr>
 				<th class="checkout-totals">
-					<div class="checkout-subtotal">Subtotal: <span>$178.00</span></div><br>
-					<div class="checkout-subtotal">Shipping & Handling: <span>$14.99</span></div><br>
-					<div class="checkout-subtotal summary">Order Total: <span>$192.99</span></div>
+					<div class="checkout-subtotal">Subtotal: <span>IDR {{ \Cart::instance('cart')->total() }}</span></div><br>
+					<div class="checkout-subtotal">Shipping & Handling: <span>IDR {{ number_format($berat * session('shipping')['value'],0,',','.') }}</span></div><br>
+					<div class="checkout-subtotal summary">Order Total: <span>IDR {{ number_format(\Cart::instance('cart')->total(0,'','')+$berat * session('shipping')['value'],0,',','.') }}</span></div>
 				</th>
 				</tr>
 
