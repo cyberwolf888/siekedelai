@@ -21,7 +21,16 @@ Route::get('/', function () {
 
 Route::get('/product-detail/{id}', 'HomeController@detail_product')->name('frontend.detail_product');
 Route::post('/cart/insert', 'HomeController@cart_insert')->name('frontend.cart.insert');
+Route::post('/cart/delete', 'HomeController@cart_delete')->name('frontend.cart.delete');
+Route::post('/cart/update', 'HomeController@cart_update')->name('frontend.cart.update');
 Route::get('/cart', 'HomeController@cart_manage')->name('frontend.cart.manage');
+Route::group(['prefix' => 'checkout', 'middleware' => ['auth','role:member-access'], 'as'=>'frontend.checkout'], function() {
+    Route::get('/', 'HomeController@checkout')->name('.billing');
+    Route::post('/', 'HomeController@checkout_billing')->name('.billing_proses');
+    Route::get('/shipping', 'HomeController@shipping')->name('.shipping');
+    Route::post('/shipping', 'HomeController@shipping_proses')->name('.shipping_proses');
+    Route::get('/order-review', 'HomeController@order_review')->name('.order_review');
+});
 
 //Backend
 Route::group(['prefix' => 'backend', 'middleware' => ['auth','role:admin-access|owner-access'], 'as'=>'backend'], function() {

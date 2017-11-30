@@ -14,7 +14,7 @@ class HomeController extends Controller
      */
     public function __construct()
     {
-        $this->middleware('auth');
+        //$this->middleware('auth');
     }
 
     /**
@@ -53,13 +53,41 @@ class HomeController extends Controller
 
     public function cart_update(Request $request)
     {
-        Cart::instance('cart')->update($request->rowId, $request->qty);
+        \Cart::instance('cart')->update($request->rowId, $request->qty);
     }
 
     public function cart_delete(Request $request)
     {
         $rowId = $request->rowId;
-        Cart::instance('cart')->remove($rowId);
-        return redirect()->back();
+        \Cart::instance('cart')->remove($rowId);
+        //return redirect()->back();
+    }
+
+    public function checkout()
+    {
+        return view('frontend.checkout');
+    }
+
+    public function checkout_billing(Request $request)
+    {
+        session(['billing' => $request->all()]);
+        return redirect()->route('frontend.checkout.shipping');
+    }
+
+    public function shipping()
+    {
+        return view('frontend.shipping');
+    }
+
+    public function shipping_proses(Request $request)
+    {
+        $model = \App\Models\Setting::find($request->shipping_address);
+        session(['shipping' => ['id'=>$model->id,'type'=>$model->type,'value'=>$model->value]]);
+        return redirect()->route('frontend.checkout.order_review');
+    }
+
+    public function order_review()
+    {
+         return view('frontend.order_review');   
     }
 }

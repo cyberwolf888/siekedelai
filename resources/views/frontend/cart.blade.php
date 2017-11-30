@@ -36,16 +36,16 @@
 			<?php $berat = 0; ?>
 		
 			@foreach(Cart::instance('cart')->content() as $cart)
-            <?php $berat+=($cart->model->weight*$cart->qty); ?>
+            <?php $berat+=($cart->model->berat*$cart->qty); ?>
 			<tr>
 				<td><img src="{{ $cart->model->getImageThumb() }}" alt="" style="width: 100px; height: 150px;" /></td>
 				<td class="cart-title"><a href="#">{{ $cart->name }}</a></td>
 				<td>IDR {{ number_format($cart->price,0,',','.') }}</td>
 				<td>
 					<form action='#'>
-						<div class="qtyminus"></div>
+						<div class="qtybtn qtyminus"></div>
 						<input type='text' name="quantity" value='{{ $cart->qty }}' class="qty" rowid="{{ $cart->rowId }}" readonly/>
-						<div class="qtyplus"></div>
+						<div class="qtybtn qtyplus"></div>
 					</form>
 				</td>
 				<td class="cart-total">IDR {{ number_format($cart->price*$cart->qty,0,',','.') }}</td>
@@ -60,14 +60,9 @@
 
 				<tr>
 				<th>
-					<form action="#" method="get" class="apply-coupon">
-						<input class="search-field" type="text" placeholder="Coupon Code" value=""/>
-						<a href="#" class="button gray">Apply Coupon</a>
-					</form>
 
 					<div class="cart-btns">
-						<a href="checkout-billing-details.html" class="button color cart-btns proceed">Proceed to Checkout</a>
-						<a href="#" class="button gray cart-btns">Update Cart</a>
+						<a href="{{ route('frontend.checkout.billing') }}" class="button color cart-btns proceed">Proceed to Checkout</a>
 					</div>
 				</th>
 				</tr>
@@ -84,17 +79,7 @@
 
 			<tr>
 				<th>Cart Subtotal</th>
-				<td><strong>$178.00</strong></td>
-			</tr>
-
-			<tr>
-				<th>Shipping and Handling</th>
-				<td>Free Shipping</td>
-			</tr>
-
-			<tr>
-				<th>Order Total</th>
-				<td><strong>$178.00</strong></td>
+				<td><strong>IDR {{ \Cart::instance('cart')->total() }}</strong></td>
 			</tr>
 
 		</table>
@@ -109,5 +94,62 @@
 @endsection
 
 @push('scripts')
+<script>
 
+    $('.qtybtn').on('click', function() {
+        var $button = $(this);
+        var oldValue = $button.parent().find('input').val();
+        var rowId = $button.parent().find('input').attr("rowid");
+        if ($button.hasClass('qtyplus')) {
+            var newVal = parseFloat(oldValue) + 1;
+        } else {
+            // Don't allow decrementing below zero
+            if (oldValue > 0) {
+                var newVal = parseFloat(oldValue) - 1;
+            } else {
+                newVal = 0;
+            }
+        }
+        //alert(newVal);
+        //$button.parent().find('input').val(newVal);
+        update_cart(rowId,newVal);
+    });
+
+    $('.cart-remove').on('click', function() {
+        var $button = $(this);
+        var rowId = $button.attr("rowid");
+        $.ajaxSetup({
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            }
+        });
+        $.ajax({
+            url: '<?= route('frontend.cart.delete') ?>',
+            type: 'POST',
+            data: {rowId:rowId},
+            success: function (data) {
+                //console.log(data);
+                location.reload();
+            }
+        });
+    });
+
+    function update_cart(rowid,qty)
+    {
+        $.ajaxSetup({
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            }
+        });
+        $.ajax({
+            url: '<?= route('frontend.cart.update') ?>',
+            type: 'POST',
+            data: {rowId:rowid,qty:qty},
+            success: function (data) {
+                //console.log(data);
+                location.reload();
+            }
+        });
+    }
+</script>
 @endpush
