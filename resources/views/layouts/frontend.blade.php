@@ -17,6 +17,7 @@
     ================================================== -->
     <link rel="stylesheet" href="{{ url('assets/frontend') }}/css/style.css">
     <link rel="stylesheet" href="{{ url('assets/frontend') }}/css/colors/green.css" id="colors">
+    @stack('plugin_css')
 
     <!--[if lt IE 9]>
         <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
@@ -140,9 +141,10 @@
 
             <!-- Search -->
             <nav class="top-search">
-                <form action="#" method="get">
+                <form action="{{ route('frontend.search') }}" method="post">
+                    {{ csrf_field() }}
                     <button><i class="fa fa-search"></i></button>
-                    <input class="search-field" type="text" placeholder="Search" value=""/>
+                    <input class="search-field" type="text" placeholder="Search" value="" name="keyword"/>
                 </form>
             </nav>
 
@@ -194,16 +196,15 @@
             <div class="four columns">
 
                 <!-- Headline -->
-                <h3 class="headline footer">Customer Service</h3>
+                <h3 class="headline footer">Menu</h3>
                 <span class="line"></span>
                 <div class="clearfix"></div>
 
                 <ul class="footer-links">
-                    <li><a href="#">Order Status</a></li>
-                    <li><a href="#">Payment Methods</a></li>
-                    <li><a href="#">Delivery & Returns</a></li>
-                    <li><a href="#">Privacy Policy</a></li>
-                    <li><a href="#">Terms & Conditions</a></li>
+                    <li><a href="{{ route('home') }}">Home</a></li>
+                    <li><a href="#">Local</a></li>
+                    <li><a href="#">Impor</a></li>
+                    <li><a href="#">Best Seller</a></li>
                 </ul>
 
             </div>
@@ -216,9 +217,8 @@
                 <div class="clearfix"></div>
 
                 <ul class="footer-links">
-                    <li><a href="#">My Account</a></li>
-                    <li><a href="#">Order History</a></li>
-                    <li><a href="#">Wish List</a></li>
+                    <li><a href="{{ route('member.profile') }}">My Account</a></li>
+                    <li><a href="{{ route('member.order_history') }}">Order History</a></li>
                 </ul>
 
             </div>
@@ -229,11 +229,15 @@
                 <h3 class="headline footer">Newsletter</h3>
                 <span class="line"></span>
                 <div class="clearfix"></div>
+                <div class="notification success closeable mailchimp-success" style="display: none;">
+                </div>
+                <div class="notification error closeable mailchimp-error" style="display: none;">
+                </div>
                 <p>Sign up to receive email updates on new product announcements, gift ideas, special promotions, sales and more.</p>
 
-                <form action="#" method="get">
-                    <button class="newsletter-btn" type="submit">Join</button>
-                    <input class="newsletter" type="text" placeholder="mail@example.com" value=""/>
+                <form action="#" method="get" id="mc-form">
+                    <button class="newsletter-btn" type="submit" id="btn_join">Join</button>
+                    <input name="news_email" id="news_email" class="newsletter" type="text" placeholder="mail@example.com" value=""/>
                 </form>
             </div>
 
@@ -297,8 +301,34 @@
 <script src="{{ url('assets/frontend') }}/scripts/jquery.isotope.min.js"></script>
 <script src="{{ url('assets/frontend') }}/scripts/puregrid.js"></script>
 <script src="{{ url('assets/frontend') }}/scripts/stacktable.js"></script>
-@stack('plugin_scripts')
 <script src="{{ url('assets/frontend') }}/scripts/custom.js"></script>
+@stack('plugin_scripts')
+<script>
+    $('#mc-form').submit(function() {
+        var CSRF_TOKEN = $('meta[name="csrf-token"]').attr('content');
+        $.ajaxSetup({
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            }
+        });
+        $.ajax({
+            url: '<?= route('frontend.subscribe') ?>',
+            type: 'POST',
+            data: {news_email:$("#news_email").val()},
+            success: function (data) {
+                if(data == "1"){
+                    $('.mailchimp-success').html('' + "Thank you for your subscribe!").fadeIn(900);
+                    $('.mailchimp-error').fadeOut(400);
+                }else{
+                    $('.mailchimp-error').html('' + "Your are already subscriber!").fadeIn(900);
+                    $('.mailchimp-success').fadeOut(400);
+                }
+            }
+        });
+        return false;
+        //alert("Thank you for your comment!");
+    });
+</script>
 @stack('scripts')
 
 

@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Nov 30, 2017 at 12:02 PM
+-- Generation Time: Dec 01, 2017 at 02:54 PM
 -- Server version: 10.1.26-MariaDB
 -- PHP Version: 7.1.9
 
@@ -61,6 +61,13 @@ CREATE TABLE `payment` (
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `payment`
+--
+
+INSERT INTO `payment` (`id`, `transaction_id`, `image`, `status`, `created_at`, `updated_at`) VALUES
+(1, 'TR17110001', '45fa2e9fbf98e64035d39c5383eeec6e.jpg', 0, '2017-12-01 12:29:16', '2017-12-01 12:29:16');
 
 -- --------------------------------------------------------
 
@@ -156,6 +163,13 @@ CREATE TABLE `subscribe` (
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
+--
+-- Dumping data for table `subscribe`
+--
+
+INSERT INTO `subscribe` (`id`, `email`, `created_at`, `updated_at`) VALUES
+(1, 'ads@mail.com', '2017-12-01 13:32:35', '2017-12-01 13:32:35');
+
 -- --------------------------------------------------------
 
 --
@@ -183,7 +197,7 @@ CREATE TABLE `transaction` (
 --
 
 INSERT INTO `transaction` (`id`, `member_id`, `fullname`, `phone`, `address`, `sub_total`, `shipping`, `total`, `status`, `resi`, `shipping_type`, `created_at`, `updated_at`) VALUES
-('TR17110001', 4, 'Member Bedebah', '086734747', 'Jalan Wisnu Marga Belayu No 19', 370000, 300000, 670000, 1, NULL, 'Wahana', '2017-11-30 10:24:39', '2017-11-30 10:24:39');
+('TR17110001', 4, 'Member Bedebah', '086734747', 'Jalan Wisnu Marga Belayu No 19', 370000, 300000, 670000, 5, 'SKU0298849938932', 'Wahana', '2017-11-30 10:24:39', '2017-12-01 12:50:13');
 
 -- --------------------------------------------------------
 
@@ -210,9 +224,9 @@ CREATE TABLE `users` (
 --
 
 INSERT INTO `users` (`id`, `name`, `email`, `password`, `phone`, `address`, `isActive`, `type`, `remember_token`, `created_at`, `updated_at`) VALUES
-(1, 'Administrator', 'admin@mail.com', '$2y$10$bLGu/CEj58z2G1QX9J9DVegK6KScKwW0aUZOyhkXMld/7NhnVpOhu', '0822464828', 'Jalan Nangka', 1, 1, '9RLey6C7EvXceFBYf54x6IamYDfFs8PqZA7MT5AWuXxXTS1VlkeXnwXjHrHH', '2017-05-26 20:49:12', '2017-05-30 00:55:14'),
+(1, 'Administrator', 'admin@mail.com', '$2y$10$bLGu/CEj58z2G1QX9J9DVegK6KScKwW0aUZOyhkXMld/7NhnVpOhu', '0822464828', 'Jalan Nangka', 1, 1, 'PntnES7JpnnUOXd7yLDdlryBay8KRExlRmfififHWT5t0We43iaC4XC14Pbe', '2017-05-26 20:49:12', '2017-05-30 00:55:14'),
 (2, 'Admn Baru', 'baru@mail.com', '$2y$10$iKM.KC4IV6PlDsakdfC.JO/UPUOzBj.adt16uxpFIVX.WAqHixNtq', '08483748473', 'Jalan Merdeka No. 120', 1, 1, NULL, '2017-05-29 23:30:18', '2017-05-29 23:30:18'),
-(4, 'Member Bedebah', 'member@mail.com', '$2y$10$Mj7tSGJJ786GO8Yuau1f2u.jTK40TOvlVroOFQkv2KPSRvPHZm3lm', '086734747', 'Jalan Wisnu Marga Belayu No 19', 1, 3, 'rpKSvaYAJGb8FJuO8cAUIq7fM7rydxXa82UAAfDY2IU1w6sjCK6VXUEm0JBi', '2017-05-30 00:00:40', '2017-09-10 22:38:36'),
+(4, 'Member Bedebah', 'member@mail.com', '$2y$10$Mj7tSGJJ786GO8Yuau1f2u.jTK40TOvlVroOFQkv2KPSRvPHZm3lm', '086734747', 'Jalan Wisnu Marga Belayu No 19', 1, 3, 'eQOKABFJGKXucjGadiOc97gKmciSgy0v1I00iRAIAvm0qNcGG2hKvpLuu8YZ', '2017-05-30 00:00:40', '2017-09-10 22:38:36'),
 (6, 'Bedebah Edan', 'bedebah@mail.com', '$2y$10$z14Tf8v9zTeyQ56RDvtEduwl6lIMB1PqyyzpBf9t2UnNHzArBFzbK', '08476474638', 'Jalan Bedebah No. 666', 1, 3, 'RVYSGjvV7zoDEpcCor2aWrQh0kpjSElDT1lMMH86zaFbZYIzWcWKboA3awNM', '2017-06-12 23:00:06', '2017-06-12 23:00:06'),
 (8, 'Made Bleger', 'made@mail.com', '$2y$10$NrfF0JNCS2uoBs.8PJhvjOXah3b77PXuPr.rvJSfQuLRyOSY97dG6', '082264546353', 'Jalan Raya Kapal No. 666', 1, 3, 'wC9KqMSRMUGA8Qtyj00lAXVQUV6cnKVEiveQ2QPPB7dW9MWMxNHnJB0g6Nza', '2017-09-08 17:53:48', '2017-09-08 17:53:48'),
 (9, 'Test Register', 'memberbaru@mail.com', '$2y$10$rIycYKNp7.sWE883M8Q4FOIvjEJiHoXQgfObLHwIZK.rSeLB9VA8W', '085736484638', 'Jalan Nangka Utara No.1', 1, 3, 'MYV1bcf01CiXBNvnPp2sbHa6Mc8CL1d5QbfmYHTjzq4S6M0870iE7yNaSGNe', '2017-11-29 07:12:58', '2017-11-29 07:12:58');
@@ -284,7 +298,7 @@ ALTER TABLE `detail_transaction`
 -- AUTO_INCREMENT for table `payment`
 --
 ALTER TABLE `payment`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT for table `product`
@@ -308,7 +322,7 @@ ALTER TABLE `setting`
 -- AUTO_INCREMENT for table `subscribe`
 --
 ALTER TABLE `subscribe`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT for table `users`

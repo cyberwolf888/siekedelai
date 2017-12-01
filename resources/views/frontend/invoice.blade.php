@@ -212,8 +212,9 @@
                     </div>
                     <br><br>
                     <center>
-                        <a class="button" href="">Continue to payment</a>
-                        <a class="button" href="" target="_blank">Print Invoice</a>
+                        @if($transaction->status == 1)
+                        <a class="button" href="{{ route('member.payment',$transaction->id) }}">Continue to payment</a>
+                        @endif
                     </center>
                     <br><br><br>
                 </div>

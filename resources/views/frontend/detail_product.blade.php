@@ -106,98 +106,35 @@
 	<!-- Products -->
 	<div class="products">
 
-		<!-- Product #1 -->
+		@foreach(\App\Models\Product::where('type',$model->type)->orderBy('id','rand')->limit(4)->get() as $row)
 		<div class="four columns">
 			<figure class="product">
 				<div class="mediaholder">
-					<a href="#">
-						<img alt="" src="images/shop_item_01.jpg"/>
+					<a href="{{ $row->getDetailLink() }}">
+						<img alt="" src="{{ $row->getImageThumb() }}"/>
 						<div class="cover">
-							<img alt="" src="images/shop_item_01_hover.jpg"/>
+							<img alt="" src="{{ $row->getImageCover() }}"/>
 						</div>
 					</a>
-					<a href="#" class="product-button"><i class="fa fa-shopping-cart"></i> Add to Cart</a>
+					<a href="{{ $row->getDetailLink() }}" class="product-button"><i class="fa fa-shopping-cart"></i> Add to Cart</a>
 				</div>
 
 				<a href="#">
 					<section>
-						<span class="product-category">Skirts</span>
-						<h5>Brown Mini Skirt</h5>
-						<span class="product-price">$79.00</span>
+						<span class="product-category">{{ $row->getType() }}</span>
+						<h5>{{ $row->name }}</h5>
+						@if($row->discount > 0)
+							<span class="product-price-discount">
+							IDR {{ number_format($row->price,0,',','.') }}
+								<i>IDR {{ number_format($row->getDiscountPrice(),0,',','.') }}</i></span>
+						@else
+							<span class="product-price">IDR {{ number_format($row->price,0,',','.') }}</span>
+						@endif
 					</section>
 				</a>
 			</figure>
 		</div>
-
-		<!-- Product #2 -->
-		<div class="four columns">
-			<figure class="product">
-				<div class="mediaholder">
-					<a href="#">
-						<img alt="" src="images/shop_item_04.jpg"/>
-						<div class="cover">
-							<img alt="" src="images/shop_item_04_hover.jpg"/>
-						</div>
-					</a>
-					<a href="#" class="product-button"><i class="fa fa-shopping-cart"></i> Add to Cart</a>
-				</div>
-
-				<a href="#">
-					<section>
-						<span class="product-category">Shirts</span>
-						<h5>Vintage Stripe Jumper</h5>
-						<span class="product-price">$49.00</span>
-					</section>
-				</a>
-			</figure>
-		</div>
-
-		<!-- Product #3 -->
-		<div class="four columns">
-			<figure class="product">
-				<div class="mediaholder">
-					<a href="#">
-						<img alt="" src="images/shop_item_07.jpg"/>
-						<div class="cover">
-							<img alt="" src="images/shop_item_07_hover.jpg"/>
-						</div>
-					</a>
-					<a href="#" class="product-button"><i class="fa fa-shopping-cart"></i> Add to Cart</a>
-				</div>
-
-				<a href="#">
-					<section>
-						<span class="product-category">Shirts</span>
-						<h5>Shirt in Navy Stripe</h5>
-						<span class="product-price">$49.00</span>
-					</section>
-				</a>
-			</figure>
-		</div>
-
-		<!-- Product #4 -->
-		<div class="four columns">
-			<figure class="product">
-				<div class="mediaholder">
-					<a href="#">
-						<img alt="" src="images/shop_item_09.jpg"/>
-						<div class="cover">
-							<img alt="" src="images/shop_item_09_hover.jpg"/>
-						</div>
-					</a>
-					<a href="#" class="product-button"><i class="fa fa-shopping-cart"></i> Add to Cart</a>
-				</div>
-
-				<a href="#">
-					<section>
-						<span class="product-category">Shirts</span>
-						<h5>Long Sleeve Check Shirt</h5>
-						<span class="product-price">$69.00</span>
-					</section>
-				</a>
-			</figure>
-		</div>
-
+		@endforeach
 	</div>
 </div>
 

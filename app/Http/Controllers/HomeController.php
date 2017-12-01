@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Payment;
+use App\Models\Subscribe;
 use App\Models\Transaction;
 use App\Models\TransactionDetail;
 use Illuminate\Http\Request;
@@ -33,6 +35,11 @@ class HomeController extends Controller
     {
         $model = Product::find($id);
         return view('frontend.detail_product',['model'=>$model]);
+    }
+
+    public function search(Request $request)
+    {
+        return $request->keyword;
     }
 
     //Cart
@@ -145,19 +152,36 @@ class HomeController extends Controller
 
     public function payment($id)
     {
+        $model = Transaction::find($id);
 
+        return view('member.payment',['model'=>$model]);
+    }
+
+    public function payment_proses(Request $request,$id)
+    {
+        $transaction = Transaction::findOrFail($id);
+        $path = base_path('assets/img/payment/');
+        $file = \Image::make($request->file('image'))->resize(800, 600)->encode('jpg', 80)->save($path.md5(str_random(12)).'.jpg');
+        $model = new Payment();
+        $model->transaction_id = $id;
+        $model->image = $file->basename;
+        $model->status = Payment::NOT_VERIFIED;
+        $model->save();
+        $transaction->status = Transaction::WAITING_VERIFIED;
+        $transaction->save();
+        return redirect()->route('member.order_history');
     }
 
     public function subscribe(Request $request)
     {
         $validator = \Validator::make($request->all(), [
-            'phone' => 'required|max:12|unique:subscribe'
+            'news_email' => 'required|unique:subscribe,email'
         ]);
         if ($validator->fails()) {
             return '0';
         }
         $model = new Subscribe();
-        $model->phone = $request->phone;
+        $model->email = $request->news_email;
         $model->save();
         return '1';
     }

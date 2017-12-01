@@ -54,19 +54,18 @@ class TransactionController extends Controller
         $model->status = Transaction::NEW_ORDER;
         $model->save();
 
-        Sms::send($member->phone, 'Pembayaran untuk Psanan #'.$model->id.' ditolak, harap verifikasi kembali.');
+        //Sms::send($member->phone, 'Pembayaran untuk Psanan #'.$model->id.' ditolak, harap verifikasi kembali.');
         return redirect()->back();
     }
 
     public function shipped(Request $request)
     {
         $model = Transaction::findOrFail($request->transaction_id);
-        $member = User::find($model->member_id);
-
+        $model->resi = $request->resi;
         $model->status = Transaction::SHIPPED;
         $model->save();
 
-        Sms::send($member->phone, 'Psanan anda #'.$model->id.' sedang dikirim.');
+        //Sms::send($member->phone, 'Psanan anda #'.$model->id.' sedang dikirim.');
         return redirect()->back();
     }
 
@@ -75,14 +74,8 @@ class TransactionController extends Controller
         $model = Transaction::findOrFail($request->transaction_id);
 
         $model->status = Transaction::FINISH;
-        $model->denda = $request->denda;
         $model->save();
 
-        foreach ($model->transaction_detail as $detail){
-            $product = Product::find($detail->product_id);
-            $product->stock = $product->stock+$detail->qty;
-            $product->save();
-        }
 
         //Sms::send($member->phone, 'Psanan anda #'.$model->id.' sudah diterima.');
         return redirect()->back();

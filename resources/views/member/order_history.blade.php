@@ -1,5 +1,10 @@
 @extends('layouts.frontend')
 
+@push('plugin_css')
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.10.16/css/jquery.dataTables.min.css">
+
+@endpush
+
 @section('content')
     <!-- Titlebar
 ================================================== -->
@@ -22,7 +27,7 @@
 
     <div class="container">
         <div class="twelve columns centered">
-            <table class="table-bordered">
+            <table class="table-bordered" id="table_orderhistory">
                 <thead>
                 <tr>
                     <th>Order No</th>
@@ -35,11 +40,22 @@
                 @foreach($model as $row)
                     <tr>
                         <td>{{ $row->id }}</td>
-                        <td>{{ $row->getStatus($row->status) }}</td>
+                        <td>
+                            {{ $row->getStatus($row->status) }}
+                            @if($row->resi != null)
+                                <br>
+                                No. Resi:
+                                <br>
+                                {{ $row->resi }}
+                            @endif
+                        </td>
                         <td>{{ 'Rp '.number_format($row->total,0,',','.') }}</td>
                         <td>{{ date("d M Y, H:i",strtotime($row->created_at)) }}</td>
                         <td>
-                            <a href="{{ url(route('backend.transaction.show', ['id' => $row->id])) }}" class="btn-floating blue" style="opacity: 1;"><i class="material-icons">subject</i></a>
+                            <a class="button" href="{{ route('member.invoice',$row->id) }}"><i class="fa fa-book"></i> Invoice</a>
+                            @if($row->status == 1)
+                            <a class="button" href="{{ route('member.payment',$row->id) }}"><i class="fa fa-money"></i> Bayar</a>
+                            @endif
                         </td>
                     </tr>
                 @endforeach
@@ -53,4 +69,10 @@
 @endsection
 
 @push('plugin_scripts')
+    <script src="//cdn.datatables.net/1.10.16/js/jquery.dataTables.min.js"></script>
+    <script>
+        $(document).ready(function() {
+            $('#table_orderhistory').DataTable();
+        } );
+    </script>
 @endpush

@@ -24,6 +24,9 @@ Route::post('/cart/insert', 'HomeController@cart_insert')->name('frontend.cart.i
 Route::post('/cart/delete', 'HomeController@cart_delete')->name('frontend.cart.delete');
 Route::post('/cart/update', 'HomeController@cart_update')->name('frontend.cart.update');
 Route::get('/cart', 'HomeController@cart_manage')->name('frontend.cart.manage');
+Route::post('/subscribe', 'HomeController@subscribe')->name('frontend.subscribe');
+Route::post('/search', 'HomeController@search')->name('frontend.search');
+
 Route::group(['prefix' => 'checkout', 'middleware' => ['auth','role:member-access'], 'as'=>'frontend.checkout'], function() {
     Route::get('/', 'HomeController@checkout')->name('.billing');
     Route::post('/', 'HomeController@checkout_billing')->name('.billing_proses');
@@ -36,6 +39,7 @@ Route::group(['prefix' => 'checkout', 'middleware' => ['auth','role:member-acces
 
 Route::group(['prefix' => 'member', 'middleware' => ['auth','role:member-access'], 'as'=>'member'], function() {
     Route::get('/payment/{id}', 'HomeController@payment')->name('.payment');
+    Route::post('/payment/{id}', 'HomeController@payment_proses')->name('.payment_proses');
     Route::get('/invoice/{id}', 'HomeController@invoice')->name('.invoice');
     Route::get('/order-history', 'HomeController@order_history')->name('.order_history');
     Route::get('/profile', 'HomeController@profile')->name('.profile');

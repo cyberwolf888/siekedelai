@@ -30,8 +30,9 @@
 
 	<!-- Billing Details Content -->
 	<div class="checkout-section active"><span>1</span> Billing Details</div>
+		<form method="post" action="{{ route('frontend.checkout.billing_proses') }}">
 		<div class="checkout-content">
-			<form method="post" action="{{ route('frontend.checkout.billing_proses') }}">
+
 			{{ csrf_field() }}
 			<div class="fullwidth">
 				<label>Full Name: <abbr>*</abbr></label>
@@ -50,12 +51,13 @@
 				<input type="text" placeholder="" name="phone"  value="{{ Auth::user()->phone }}" required />
 			</div>
 
+
 			<div class="clearfix"></div>
 
 		</div>
 		<div class="clearfix"></div>
 		<input type="submit" class="continue button color" name="continue" value="Continue" />
-
+		</form>
 
 		<a href="#"><div class="checkout-section"><span>2</span> Delivery</div></a>
 		<a href="#"><div class="checkout-section"><span>3</span> Payment & Order Review</div></a>
