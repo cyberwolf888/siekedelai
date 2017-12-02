@@ -18,7 +18,9 @@ Auth::routes();
 Route::get('/', function () {
     return view('frontend.home');
 })->name('home');
-
+Route::get('/local', 'HomeController@local')->name('frontend.local');
+Route::get('/impor', 'HomeController@impor')->name('frontend.impor');
+Route::get('/best-seller', 'HomeController@best_seller')->name('frontend.best_seller');
 Route::get('/product-detail/{id}', 'HomeController@detail_product')->name('frontend.detail_product');
 Route::post('/cart/insert', 'HomeController@cart_insert')->name('frontend.cart.insert');
 Route::post('/cart/delete', 'HomeController@cart_delete')->name('frontend.cart.delete');

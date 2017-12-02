@@ -31,6 +31,25 @@ class HomeController extends Controller
         return view('home');
     }
 
+    public function local()
+    {
+        $model = Product::where('type','1')->get();
+    }
+
+    public function impor()
+    {
+        $model = Product::where('type','2')->get();
+    }
+
+    public function best_seller()
+    {
+        $model = TransactionDetail::select(\DB::raw('*,COUNT("id") AS jml'))
+            ->with('product')
+            ->groupBy('product_id')
+            ->get();
+        dd($model);
+    }
+
     public function detail_product($id)
     {
         $model = Product::find($id);
