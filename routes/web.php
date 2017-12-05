@@ -18,6 +18,7 @@ Auth::routes();
 Route::get('/', function () {
     return view('frontend.home');
 })->name('home');
+
 Route::get('/local', 'HomeController@local')->name('frontend.local');
 Route::get('/impor', 'HomeController@impor')->name('frontend.impor');
 Route::get('/best-seller', 'HomeController@best_seller')->name('frontend.best_seller');

@@ -67,7 +67,7 @@
         <!-- Logo -->
         <div class="four columns">
             <div id="logo">
-                <h1><a href="{{ route('home') }}"><img src="{{ url('assets/frontend') }}/images/logo.png" alt="Trizzy" /></a></h1>
+                <h1><a href="{{ route('home') }}"><img src="{{ url('assets') }}/img/logo.png" alt="Trizzy" /> Soy Store</a></h1>
             </div>
         </div>
 
@@ -189,7 +189,7 @@
         <div class="container">
 
             <div class="four columns">
-                <img src="{{ url('assets/frontend') }}/images/logo-footer.png" alt="" class="margin-top-10"/>
+                <img src="{{ url('assets') }}/img/logo.png" alt="" class="margin-top-10"/>
                 <p class="margin-top-15">Nulla facilisis feugiat magna, ut molestie metus hendrerit vitae. Vivamus tristique lectus at varius rutrum. Integer lobortis mauris non consectetur eleifend.</p>
             </div>
 
