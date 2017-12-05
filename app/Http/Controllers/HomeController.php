@@ -34,11 +34,13 @@ class HomeController extends Controller
     public function local()
     {
         $model = Product::where('type','1')->get();
+        return view('frontend.local',['model'=>$model]);
     }
 
     public function impor()
     {
         $model = Product::where('type','2')->get();
+        return view('frontend.impor',['model'=>$model]);
     }
 
     public function best_seller()
@@ -47,7 +49,7 @@ class HomeController extends Controller
             ->with('product')
             ->groupBy('product_id')
             ->get();
-        dd($model);
+        return view('frontend.best_seller',['model'=>$model]);
     }
 
     public function detail_product($id)
@@ -58,7 +60,8 @@ class HomeController extends Controller
 
     public function search(Request $request)
     {
-        return $request->keyword;
+        $model = Product::where('name','like','%'.$request->keyword.'%')->get();
+        return view('frontend.search',['model'=>$model]);
     }
 
     //Cart

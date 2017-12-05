@@ -165,13 +165,13 @@
 
                     <li><a href="{{ route('home') }}" class="current homepage" id="current">Home</a></li>
                     <li class="demo-button">
-                        <a href="#">Local</a>
+                        <a href="{{ route('frontend.local') }}">Local</a>
                     </li>
                     <li class="demo-button">
-                        <a href="#">Impor</a>
+                        <a href="{{ route('frontend.impor') }}">Impor</a>
                     </li>
                     <li class="demo-button">
-                        <a href="#">Best Seller</a>
+                        <a href="{{ route('frontend.best_seller') }}">Best Seller</a>
                     </li>
 
                 </ul>
