@@ -190,7 +190,7 @@
 
             <div class="four columns">
                 <img src="{{ url('assets') }}/img/logo.png" alt="" class="margin-top-10"/>
-                <p class="margin-top-15">Nulla facilisis feugiat magna, ut molestie metus hendrerit vitae. Vivamus tristique lectus at varius rutrum. Integer lobortis mauris non consectetur eleifend.</p>
+                <p class="margin-top-15">Soybeen Seed Store merupakan sebuah toko online yang khusus menjual kedelai dengan kualitas terbaik.</p>
             </div>
 
             <div class="four columns">
@@ -202,9 +202,9 @@
 
                 <ul class="footer-links">
                     <li><a href="{{ route('home') }}">Home</a></li>
-                    <li><a href="#">Local</a></li>
-                    <li><a href="#">Impor</a></li>
-                    <li><a href="#">Best Seller</a></li>
+                    <li><a href="{{ route('frontend.local') }}">Local</a></li>
+                    <li><a href="{{ route('frontend.impor') }}">Impor</a></li>
+                    <li><a href="{{ route('frontend.best_seller') }}">Best Seller</a></li>
                 </ul>
 
             </div>
@@ -233,7 +233,7 @@
                 </div>
                 <div class="notification error closeable mailchimp-error" style="display: none;">
                 </div>
-                <p>Sign up to receive email updates on new product announcements, gift ideas, special promotions, sales and more.</p>
+                <p>Silakan daftarkan email anda disini untuk mendapatkan informasi promosi terbaru dari kami.</p>
 
                 <form action="#" method="get" id="mc-form">
                     <button class="newsletter-btn" type="submit" id="btn_join">Join</button>

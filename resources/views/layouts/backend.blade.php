@@ -139,6 +139,9 @@
                 <li class="no-padding @if (str_is('*.product.*', Route::currentRouteName())) active @endif"><a class="waves-effect waves-grey" href="{{ route('backend.product.manage') }}"><i class="material-icons">store</i>Product</a></li>
                 @endcan
                 <li class="no-padding @if (str_is('*.transaction.*', Route::currentRouteName())) active @endif"><a class="waves-effect waves-grey" href="{{ route('backend.transaction.manage') }}"><i class="material-icons">shopping_cart</i>Transaction</a></li>
+                @can('owner-access')
+                    <li class="no-padding @if (str_is('*.report.*', Route::currentRouteName())) active @endif"><a class="waves-effect waves-grey" href="{{ route('backend.report.index') }}"><i class="material-icons">assessment</i>Report</a></li>
+                @endcan
                 <li class="no-padding @if (str_is('*.user.*', Route::currentRouteName()))collaps active @endif">
                     <a class="collapsible-header waves-effect waves-grey"><i class="material-icons">perm_identity</i>Users<i class="nav-drop-icon material-icons">keyboard_arrow_right</i></a>
                     <div class="collapsible-body">
@@ -155,11 +158,10 @@
                         </ul>
                     </div>
                 </li>
-                @can('owner-access')
-                <li class="no-padding @if (str_is('*.report.*', Route::currentRouteName())) active @endif"><a class="waves-effect waves-grey" href="{{ route('backend.report.index') }}"><i class="material-icons">assessment</i>Report</a></li>
-                @endcan
                 <!-- <li class="no-padding @if (str_is('*.promotion.*', Route::currentRouteName())) active @endif"><a class="waves-effect waves-grey" href="{{ route('backend.promotion.index') }}"><i class="material-icons">rss_feed</i>Promotion</a></li> -->
+                @can('admin-access')
                 <li class="no-padding @if (str_is('*.setting.*', Route::currentRouteName())) active @endif"><a class="waves-effect waves-grey" href="{{ route('backend.setting.manage') }}"><i class="material-icons">settings</i>Setting</a></li>
+                @endcan
                 <li class="no-padding @if (str_is('*.profile.*', Route::currentRouteName())) active @endif"><a class="waves-effect waves-grey" href="{{ route('backend.profile.index') }}"><i class="material-icons">account_circle</i>Profile</a></li>
                 <li class="no-padding">
                     <a class="waves-effect waves-grey" href="{{ url('logout') }}"  onclick="event.preventDefault();document.getElementById('logout-form').submit();">
