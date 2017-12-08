@@ -127,7 +127,7 @@
                     </ul>
                     <div class="cart-buttons button">
                         <a href="{{ route('frontend.cart.manage') }}" class="view-cart" ><span data-hover="View Cart"><span>View Cart</span></span></a>
-                        <a href="checkout-billing-details.html" class="checkout"><span data-hover="Checkout">Checkout</span></a>
+                        <a href="{{ route('frontend.checkout.billing') }}" class="checkout"><span data-hover="Checkout">Checkout</span></a>
                     </div>
                     @else
                     <h3>Cart is empty</h3>

@@ -140,8 +140,19 @@
                 @endcan
                 <li class="no-padding @if (str_is('*.transaction.*', Route::currentRouteName())) active @endif"><a class="waves-effect waves-grey" href="{{ route('backend.transaction.manage') }}"><i class="material-icons">shopping_cart</i>Transaction</a></li>
                 @can('owner-access')
-                    <li class="no-padding @if (str_is('*.report.*', Route::currentRouteName())) active @endif"><a class="waves-effect waves-grey" href="{{ route('backend.report.index') }}"><i class="material-icons">assessment</i>Report</a></li>
+                    <li class="no-padding @if (str_is('*.report.*', Route::currentRouteName())) active @endif"><a class="waves-effect waves-grey" href="{{ route('backend.report.index') }}"><i class="material-icons">assessment</i>Laporan Sales</a></li>
+                    <li class="no-padding @if (str_is('*.grafik.*', Route::currentRouteName()))collaps active @endif">
+                        <a class="collapsible-header waves-effect waves-grey"><i class="material-icons">assessment</i>Grafik Sales<i class="nav-drop-icon material-icons">keyboard_arrow_right</i></a>
+                        <div class="collapsible-body">
+                            <ul>
+                                <li><a href="{{ route('backend.grafik.all') }}">All</a></li>
+                                <li><a href="{{ route('backend.grafik.local') }}">Local</a></li>
+                                <li><a href="{{ route('backend.grafik.impor') }}">Impor</a></li>
+                            </ul>
+                        </div>
+                    </li>
                 @endcan
+
                 <li class="no-padding @if (str_is('*.user.*', Route::currentRouteName()))collaps active @endif">
                     <a class="collapsible-header waves-effect waves-grey"><i class="material-icons">perm_identity</i>Users<i class="nav-drop-icon material-icons">keyboard_arrow_right</i></a>
                     <div class="collapsible-body">

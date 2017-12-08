@@ -22,11 +22,32 @@ class DashboardController extends Controller
         $count_transaction = Transaction::where('created_at','>=',$end_date)->count('id');
         $member = User::where('type',3)->where('created_at','>=',date("Y-m-d", strtotime('-4 week', strtotime($start_date))))->count('id');
         $transaction = Transaction::limit(5)->orderBy('id','DESC')->get();
+
+
+        $bulan = [1=>'Jan','Feb','Mar','Apr','Mei','Jun','Jul','Aug','Spt','Oct','Nov','Dec'];
+        $labels='[]';
+        $series='[]';
+        $transaksi = \DB::select('select sum(t.total) as total_transaksi, MONTH(t.created_at) AS bulan from transaction AS t group by MONTH(t.created_at)');
+        if (count($transaksi)>0){
+            $series = '[';
+            $labels ='[';
+            foreach ($transaksi as $row){
+                $series.=$row->total_transaksi.',';
+                $labels.="'".$bulan[$row->bulan]."',";
+            }
+            $series = substr($series, 0, -1).']';
+            $labels = substr($labels, 0, -1).']';
+        }
+
+
+
         return view('backend.dashboard.index',[
             'sales'=>$sales,
             'member'=>$member,
             'count_transaction'=>$count_transaction,
-            'transaction'=>$transaction
+            'transaction'=>$transaction,
+            'series'=>$series,
+            'labels'=>$labels
         ]);
     }
 

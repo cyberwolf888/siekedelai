@@ -31,35 +31,34 @@
 
 
 	<!-- Checkout Content -->
-	<a href="checkout-billing-details.html"><div class="checkout-section"><span>1</span> Billing Details <strong><i class="fa fa-edit"></i>Edit</strong> </div></a>
-	<div class="checkout-content">
-	
-	<div class="four columns alpha">
-		<ul class="address-review">
-			<li><strong>Billing Address</strong></li>
-			<li>Mr. Walter C. Brown</li>
-			<li>49 Featherstone Street</li>
-			<li> London</li>
-			<li> EC1Y 8SY</li>
-			<li>United Kingdom</li>
-		</ul>
-	</div>
-	<div class="four columns alpha omega">
-		<ul class="address-review">
-			<li><strong>Shipping Address</strong></li>
-			<li>Same as Billing Address</li>
-		</ul>
-	</div>
-	<div class="clearfix"></div>
-	</div>
+	<a href="{{ route('frontend.checkout.billing') }}"><div class="checkout-section"><span>1</span> Billing Details <strong><i class="fa fa-edit"></i>Edit</strong> </div></a>
+		<div class="checkout-content">
+
+			<div class="four columns alpha">
+				<ul class="address-review">
+					<li><strong>Billing Address</strong></li>
+					<li>{{ session('billing')['name'] }}</li>
+					<li>{{ session('billing')['email'] }}</li>
+					<li>{{ session('billing')['phone'] }}</li>
+
+				</ul>
+			</div>
+			<div class="four columns alpha omega">
+				<ul class="address-review">
+					<li><strong>Shipping Address</strong></li>
+					<li>{{ session('billing')['address'] }}</li>
+				</ul>
+			</div>
+			<div class="clearfix"></div>
+		</div>
 	
 
-		<a href="checkout-delivery.html"><div class="checkout-section"><span>2</span> Delivery <strong><i class="fa fa-edit"></i>Edit</strong> </div></a>
+		<a href="{{ route('frontend.checkout.shipping') }}"><div class="checkout-section"><span>2</span> Delivery <strong><i class="fa fa-edit"></i>Edit</strong> </div></a>
 		<div class="checkout-delivery">
 
 			<div class="eight columns alpha omega">
 				<ul class="address-review delivery">
-					<li><strong>Express Delivery <span class="delivery-summary">$14.99 <span class="sep">|</span> Delivery in 1 to 2 Business Days</span></strong></li>
+					<li><strong>{{ session('shipping')['type'] }} <span class="delivery-summary">IDR {{ number_format(session('shipping')['value'],0,',','.') }}/kg</strong></li>
 				</ul>
 			</div>
 			<div class="clearfix"></div>
@@ -74,6 +73,13 @@
 						<li><strong>Transfer Bank</strong></li>
 						<li class="credit-card-fields">
 							Silakan lakukan transfer bank ke salah satu rekening berikut
+							<h3>Bank BCA</h3>
+							<span>89938388393</span><br>
+							<span>A/n Bedebah</span>
+							<br><br>
+							<h3>Bank Mandiri</h3>
+							<span>89938388393</span><br>
+							<span>A/n Bedebah</span>
 							<div class="clearfix"></div>
 						</li>
 					</ul>

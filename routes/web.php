@@ -130,6 +130,16 @@ Route::group(['prefix' => 'backend', 'middleware' => ['auth','role:admin-access|
         Route::post('/transaction', 'Backend\ReportController@transaction')->name('.transaction');
     });
 
+    //Grafik
+    Route::group(['prefix' => 'grafik', 'as'=>'.grafik'], function() {
+        Route::get('/all', 'Backend\GrafikController@all')->name('.all');
+        Route::post('/result_all', 'Backend\GrafikController@result_all')->name('.result_all');
+        Route::get('/local', 'Backend\GrafikController@local')->name('.local');
+        Route::post('/result_local', 'Backend\GrafikController@result_local')->name('.result_local');
+        Route::get('/impor', 'Backend\GrafikController@impor')->name('.impor');
+        Route::post('/result_impor', 'Backend\GrafikController@result_impor')->name('.result_impor');
+    });
+
     //Promotion
     Route::group(['prefix' => 'promotion', 'as'=>'.promotion'], function() {
         Route::get('/', 'Backend\PromotionController@index')->name('.index');

@@ -51,12 +51,6 @@
                         </div>
                         <div class="row">
                             <div class="input-field col s12">
-                                {!! Form::select('city', $model->getListCity(), $model->city) !!}
-                                {!! Form::label('city', 'City') !!}
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="input-field col s12">
                                 <input name="password" id="password" type="password" class="validate">
                                 <label for="password">Password</label>
                             </div>

@@ -210,7 +210,7 @@ class HomeController extends Controller
 
     public function order_history()
     {
-        $model = Transaction::where('member_id',\Auth::user()->id)->get();
+        $model = Transaction::where('member_id',\Auth::user()->id)->orderBy('created_at','desc')->get();
 
         return view('member.order_history', ['model'=>$model]);
     }

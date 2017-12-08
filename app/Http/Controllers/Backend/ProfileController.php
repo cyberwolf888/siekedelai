@@ -24,8 +24,7 @@ class ProfileController extends Controller
         $filter = [
             'fullname' => 'required|max:255',
             'phone' => 'required',
-            'address' => 'required',
-            'city' => 'required'
+            'address' => 'required'
         ];
 
         if($request->email === $user->email){

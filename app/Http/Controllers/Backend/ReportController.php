@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Backend;
 
 use App\Models\Transaction;
+use App\Models\TransactionDetail;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 
@@ -30,6 +31,7 @@ class ReportController extends Controller
         $total = $transaction->sum('total');
         $model = $transaction->get();
         $count = $transaction->count();
+
         return view('backend.report.result',[
             'model'=>$model,
             'start_date'=>$start_date,

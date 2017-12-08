@@ -1,6 +1,7 @@
 @extends('layouts.backend')
 
 @push('plugin_css')
+<link href="{{ url('assets/backend') }}/css/styles.css" type="text/css" rel="stylesheet">                                     <!-- Core CSS with all styles -->
 <link href="{{ url('assets/backend') }}/plugins/sweetalert/sweetalert.css" rel="stylesheet" type="text/css"/>
 <link href="{{ url('assets/backend') }}/plugins/datatables/css/jquery.dataTables.min.css" rel="stylesheet">
 <style>
@@ -13,8 +14,7 @@
 @section('content')
     <main class="mn-inner">
         <div class="row no-m-t no-m-b">
-            <div class="col s12 m12 l4">
-            </div>
+            <div class="col s12 m12 l4"></div>
             <div class="col s12 m12 l4">
                 <div class="card stats-card">
                     <div class="card-content">
@@ -32,6 +32,7 @@
                 </div>
             </div>
         </div>
+
         <div class="row">
             <div class="col s12">
                 <div class="page-title">Report Transaction</div>
@@ -94,11 +95,18 @@
 <script src="{{ url('assets/backend') }}/datatables/pdfmake.min.js"></script>
 <script src="{{ url('assets/backend') }}/datatables/vfs_fonts.js"></script>
 <script src="{{ url('assets/backend') }}/datatables/buttons.html5.min.js"></script>
+
+<script src="{{ url('assets/backend') }}/plugins/charts-flot/jquery.flot.min.js"></script>             <!-- Flot Main File -->
+<script src="{{ url('assets/backend') }}/plugins/charts-flot/jquery.flot.pie.min.js"></script>         <!-- Flot Pie Chart Plugin -->
+<script src="{{ url('assets/backend') }}/plugins/charts-flot/jquery.flot.resize.js"></script>          <!-- Flot Responsive -->
+
+<script src="{{ url('assets/backend') }}/plugins/charts-flot/jquery.flot.tooltip.min.js"></script>    <!-- Flot Tooltips -->
 @endpush
 
 @push('scripts')
 <script>
     $(document).ready(function() {
+
         var buttonCommon = {
             exportOptions: {
                 format: {
@@ -129,28 +137,28 @@
             buttons: [
                 $.extend( true, {}, buttonCommon, {
                     extend: 'copyHtml5',
-                    className:"waves-effect waves-light btn margin-right-10",
+                    className:"btn btn-primary btn-raised margin-right-10",
                     exportOptions: {
                         columns: [ 0, 1, 2, 3, 4, 5 ]
                     }
                 } ),
                 $.extend( true, {}, buttonCommon, {
                     extend: 'excelHtml5',
-                    className:"waves-effect waves-light btn margin-right-10",
+                    className:"btn btn-primary btn-raised margin-right-10",
                     exportOptions: {
                         columns: [ 0, 1, 2, 3, 4, 5 ]
                     }
                 }),
                 {
                     extend: 'pdfHtml5',
-                    className:"waves-effect waves-light btn margin-right-10",
+                    className:"btn btn-primary btn-raised margin-right-10",
                     exportOptions: {
                         columns: [ 0, 1, 2, 3, 4, 5 ]
                     }
                 },
                     $.extend( true, {}, buttonCommon, {
                     extend: 'csvHtml5',
-                    className:"waves-effect waves-light btn margin-right-10",
+                    className:"btn btn-primary btn-raised margin-right-10",
                     exportOptions: {
                         columns: [ 0, 1, 2, 3, 4, 5 ]
                     }
