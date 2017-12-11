@@ -106,7 +106,7 @@
 	<!-- Products -->
 	<div class="products">
 
-		@foreach(\App\Models\Product::where('type',$model->type)->orderBy('id','rand')->limit(4)->get() as $row)
+		@foreach(\App\Models\Product::where('type',$model->type)->where('id','<>',$model->id)->orderBy('id','rand')->limit(4)->get() as $row)
 		<div class="four columns">
 			<figure class="product">
 				<div class="mediaholder">

@@ -36,7 +36,7 @@ class GrafikController extends Controller
 
         $datax = "";
         foreach ($model as $row){
-            $datax.= '{ label: "'.$row->name.'",  data: '.$row->total.', color: \'#e51c23\'},';
+            $datax.= '{ label: "'.$row->name.'",  data: '.$row->total.', color: \'#'.$this->getColor().'\'},';
         }
 
         return view('backend.grafik.result_all',[
@@ -76,7 +76,7 @@ class GrafikController extends Controller
 
         $datax = "";
         foreach ($model as $row){
-            $datax.= '{ label: "'.$row->name.'",  data: '.$row->total.', color: \'#e51c23\'},';
+            $datax.= '{ label: "'.$row->name.'",  data: '.$row->total.', color: \'#'.$this->getColor().'\'},';
         }
 
         return view('backend.grafik.result_all',[
@@ -116,7 +116,7 @@ class GrafikController extends Controller
 
         $datax = "";
         foreach ($model as $row){
-            $datax.= '{ label: "'.$row->name.'",  data: '.$row->total.', color: \'#e51c23\'},';
+            $datax.= '{ label: "'.$row->name.'",  data: '.$row->total.', color: \'#'.$this->getColor().'\'},';
         }
 
         return view('backend.grafik.result_all',[
@@ -125,5 +125,11 @@ class GrafikController extends Controller
             'end_date'=>$end_date,
             'datax'=>$datax
         ]);
+    }
+
+    private function getColor()
+    {
+        $color = dechex(rand(0x000000, 0xFFFFFF));
+        return $color;
     }
 }
