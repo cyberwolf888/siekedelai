@@ -86,7 +86,7 @@
                     </a>
                 </section>
                 <div class="header-title col s3 m3">
-                    <span class="chapter-title">We Adventure</span>
+                    <span class="chapter-title">SIE Kedelai</span>
                 </div>
                 <ul class="right col s9 m3 nav-right-menu">
                     <?php $new_order = \App\Models\Transaction::where('status',\App\Models\Transaction::NEW_ORDER)->count(); ?>
