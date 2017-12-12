@@ -13,9 +13,9 @@
 				<li data-transition="fade" data-slotamount="7" data-masterspeed="1000">
  					<img src="{{ url('assets/frontend') }}/images/1.jpg"  alt="darkblurbg"  data-bgfit="cover" data-bgposition="left top" data-bgrepeat="no-repeat">
  					<div class="caption dark sfb fadeout" data-x="750" data-y="170" data-speed="400" data-start="800"  data-easing="Power4.easeOut">
-						<h2>Urban Style</h2>
-						<h3>Every cut and colour</h3>
-						<a href="shop-with-sidebar.html" class="caption-btn">Shop The Collection</a>
+						<h2>Local soy seed</h2>
+						<h3>Every taste and colour</h3>
+						<a href="{{ route('frontend.local') }}" class="caption-btn">See more</a>
 					</div>
 				</li>
 
@@ -24,9 +24,9 @@
 				<li data-transition="zoomout" data-slotamount="7" data-masterspeed="1500" >
 					<img src="{{ url('assets/frontend') }}/images/2.jpg"  alt="slidebg1"  data-bgfit="cover" data-bgposition="left top" data-bgrepeat="no-repeat">
  					<div class="caption sfb fadeout" data-x="145" data-y="170" data-speed="400" data-start="800"  data-easing="Power4.easeOut">
-						<h2>Dress Sharp</h2>
-						<h3>Learn from the classics</h3>
-						<a href="shop-with-sidebar.html" class="caption-btn">Shop The Collection</a>
+						<h2>Impor soy seed</h2>
+						<h3>The best you can get</h3>
+						<a href="{{ route('frontend.impor') }}" class="caption-btn">See more</a>
 					</div>
 				</li>
 

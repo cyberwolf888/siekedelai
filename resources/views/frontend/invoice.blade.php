@@ -114,7 +114,7 @@
                                     <table>
                                         <tr>
                                             <td class="title">
-                                                <img src="{{ url('assets/frontend') }}/img/logo.png" style="width:100px; max-width:300px;">
+                                                <img src="{{ url('assets') }}/img/logo.png" style="width:100px; max-width:300px;">
                                             </td>
 
                                             <td>
@@ -132,7 +132,7 @@
                                     <table>
                                         <tr>
                                             <td>
-                                                D&G Furniture.<br>
+                                                Soy Seed Store.<br>
                                                 Jalan Raya Denpasar<br>
                                                 0857373434348
                                             </td>
