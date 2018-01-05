@@ -21,9 +21,11 @@ class ReportController extends Controller
             'end_date' => 'required',
             'status' => 'required|numeric'
         ]);
+
         $start_date = date('Y/m/d', strtotime($request->start_date));
         $end_date = date('Y/m/d', strtotime($request->end_date));
         $transaction = Transaction::whereRaw('created_at >= "'.$start_date.'"')->whereRaw('created_at <= "'.$end_date.'"');
+
         if($request->status != '6'){
             $transaction->where('status', $request->status);
         }
@@ -31,7 +33,6 @@ class ReportController extends Controller
         $total = $transaction->sum('total');
         $model = $transaction->get();
         $count = $transaction->count();
-
         return view('backend.report.result',[
             'model'=>$model,
             'start_date'=>$start_date,

@@ -3,7 +3,6 @@
 namespace App\Http\Controllers\Backend;
 
 use App\Models\Product;
-use App\Models\ProductDetail;
 use App\Models\ProductImages;
 use Illuminate\Http\Request;
 
@@ -68,7 +67,7 @@ class ProductController extends Controller
 
     public function edit($id)
     {
-        $model = Product::with('product_detail')->find($id);
+        $model = Product::find($id);
         return view('backend.product.form',[
             'model'=>$model,
             'update'=>true
@@ -77,34 +76,28 @@ class ProductController extends Controller
 
     public function update(Request $request, $id)
     {
+        $model = Product::findOrfail($id);
         $this->validate($request, [
-            'name' => 'required|unique:category|max:255',
+            'name' => 'required|max:255',
             'description' => 'required',
             'price' => 'required|numeric',
             'stock' => 'required|numeric',
+            'berat' => 'required|numeric',
             'discount' => 'required|numeric',
             'available' => 'required',
         ]);
-        $model = Product::findOrfail($id);
-        $model->category_id = $request->category_id;
+
+        $model->type = $request->type;
         $model->name = $request->name;
         $model->price = $request->price;
         $model->stock = $request->stock;
+        $model->berat = $request->berat;
         $model->description = $request->description;
         $model->discount = $request->discount;
-        $model->isSale = $request->isSale;
         $model->available = $request->available;
         $model->save();
 
-        ProductDetail::where('product_id', $model->id)->delete();
-        $count = count($request->label);
-        for ($i=0; $i<$count; $i++){
-            $detail = new ProductDetail();
-            $detail->product_id = $model->id;
-            $detail->label = $request->label[$i];
-            $detail->value = $request->value[$i];
-            $detail->save();
-        }
+
         return redirect()->route('backend.product.manage')->with('success', 'Update product!');
     }
 
